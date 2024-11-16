@@ -38,7 +38,7 @@ const login = async(req,res) => {
         }
         const secretKey = process.env.SECRET_KEY
         const token = await jwt.sign(payload, secretKey, {expiresIn: "1d"})
-        res.cookie('access_token', token, {httpOnly: false, secure: true, sameSite: 'Strict', maxAge: 3600000,})
+        res.cookie('access_token', token, {httpOnly: false, secure: false, sameSite: 'Lax', maxAge: 3600000,})
         res.status(200).json({message: "logeed in successfully", payload})
     }catch(error){
         res.status(500).json({message: "unable to login"})
