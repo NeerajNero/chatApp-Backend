@@ -17,6 +17,7 @@ const register = async(req,res) => {
     await saveUser.save();
     res.status(201).json({message: "user created successfully"})
     }catch(error){
+        console.error('Error saving user:', err);
         res.status(500).json({message: "unable to create new user"})
     }
 }
