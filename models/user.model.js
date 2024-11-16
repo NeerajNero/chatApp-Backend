@@ -14,5 +14,5 @@ const userSchema = new mongoose.Schema({
         required: true
     }
 })
-const User = new mongoose.model('User', userSchema);
+const User = new mongoose.model('User', userSchema, 'chatApp');
 module.exports = User
