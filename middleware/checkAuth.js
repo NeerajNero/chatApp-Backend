@@ -2,14 +2,17 @@ const jwt = require('jsonwebtoken')
 const cookie = require('cookie');
 
 const checkToken = (socket ,next) => {
-    const token = socket.handshake.headers.cookie;  
-    console.log("Received token:", token);
-    if(token){
-        const cookies = cookie.parse(token);
-    const accessToken = cookies.access_token; 
-    console.log("Access Token:", accessToken);
-  } else {
-    console.log("No cookies found!");
+    const cookies = socket.handshake.headers.cookie
+    ? cookie.parse(socket.handshake.headers.cookie)
+    : {};
+
+  const token = socket.handshake.auth.access_token || cookies.access_token;
+  console.log('Access Token:', token);
+
+  if (!token) {
+    console.error('Authentication token missing!');
+    socket.disconnect();
+    return;
   }
     try{
         const decoded = jwt.verify(token, process.env.SECRET_KEY)
