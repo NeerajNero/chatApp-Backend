@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken')
 
 const checkToken = (socket ,next) => {
-    const token = socket.handshake.auth.access_token   
+    const token = socket.handshake.headers.auth.access_token   
     console.log("Received token:", token);
     if(!token){
         console.error("Authentication error: No token provided");
